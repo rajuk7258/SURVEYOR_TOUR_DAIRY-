@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Surveyor Tour Diary</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js "></script>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <h1>Surveyor Tour Diary</h1>
+    <button onclick="showScreen('settings')" style="background:none; color:white; font-size:1.2rem;">⚙️</button>
+  </header>
+
+  <!-- Grid Menu -->
+  <div id="home" class="screen active grid-container">
+    <div class="grid-item" onclick="showScreen('input')">INPUT DAY WISE DETAILS</div>
+    <div class="grid-item" onclick="showScreen('calendar')">CALENDAR</div>
+    <div class="grid-item" onclick="showScreen('events')">LIST OF EVENTS MONTH VISE</div>
+    <div class="grid-item" onclick="showScreen('export')">EXPORT</div>
+  </div>
+
+  <!-- Input Form -->
+  <div id="input" class="screen">
+    <h2>Daily Tour Diary</h2>
+    <form onsubmit="submitData(event)">
+      <input type="text" id="topic" placeholder="Topic" required />
+      <input type="text" id="place" placeholder="Place of Visit" required />
+      <input type="text" id="purpose" placeholder="Purpose of Visit" required />
+      <input type="datetime-local" id="datetime" required />
+      <label><input type="checkbox" id="alarm"> Set Alarm</label>
+      <button type="submit">Submit</button>
+    </form>
+    <button onclick="showScreen('home')">Back</button>
+  </div>
+
+  <!-- Calendar View -->
+  <div id="calendar" class="screen">
+    <h2>Calendar</h2>
+    <div style="text-align:center; margin-bottom:1rem;">
+      <button onclick="changeMonth(-1)">⬅️</button>
+      <span id="monthLabel"></span>
+      <button onclick="changeMonth(1)">➡️</button>
+    </div>
+    <div class="calendar" id="calendarGrid"></div>
+
+    <!-- Event Details Section -->
+    <div class="event-details" id="eventDetails">
+      <h3>Events for Selected Date</h3>
+      <p id="noEventMessage">Click on a date to view events.</p>
+      <div id="eventList"></div>
+    </div>
+
+    <button onclick="showScreen('home')">Back</button>
+  </div>
+
+  <!-- Monthly Events -->
+  <div id="events" class="screen">
+    <h2>Events by Month</h2>
+    <input type="text" id="filterInput" placeholder="Filter by keyword..." oninput="updateEventList()" />
+    <table id="eventTable"></table>
+    <button onclick="showScreen('home')">Back</button>
+  </div>
+
+  <!-- Export -->
+  <div id="export" class="screen">
+    <h2>Export Data</h2>
+    <button onclick="exportCSV()">Export CSV</button>
+    <button onclick="showScreen('home')">Back</button>
+  </div>
+
+  <!-- Settings -->
+  <div id="settings" class="screen">
+    <h2>Settings</h2>
+    <div class="settings">
+      <label><input type="checkbox" id="alarmToggle" checked /> Enable Alarms</label>
+      <label>Alarm Ringtone:
+        <select id="ringtoneSelect">
+          <option value="default">Default</option>
+        </select>
+      </label>
+    </div>
+    <button onclick="showScreen('home')">Save & Back</button>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
